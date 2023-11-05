@@ -1,29 +1,24 @@
 import argparse, os, gzip
 import datetime
-
+from configure import example
 from Species import species
 
 from SNP import vc_snp
 
 
 def vc():
-    def check_value(value):
-        if value not in ['s', 'r', 'c', 'sr', 'sc', 'rs', 'rc', 'cs', 'cr', 'src', 'scr', 'rsc', 'rcs', 'csr', 'crs']:
-            raise argparse.ArgumentTypeError(
-                'Mortal! You can only beseech for predictions of s(pecies), r(esistance), and c(gMLST)!')
-        return value
-
     parser = argparse.ArgumentParser(
-        description='Abracadabra, an ancient incantation, unveils the mystic power concealed within Acinetobacter baumannii genomes.',
+        description='VibcSNP 1.0.1 https://github.com/Zhou-lab-SUDA/VibcSNP/',
         add_help=True,
-        usage='''In the realm of code, behold Abracadabra, the enchanting script, that holds the key to unlocking the enigmatic potential within Acinetobacter baumannii genomes.'''
+        usage='VibcSNP.py -q query genome.'
     )
 
     parser.add_argument(
         '-q', '--query',
         type=str,
         required=True,
-        help='''-q or --query: Input genome.'''
+        help='''-q or --query: Input genome.
+        Try examples with -q/--query vc_example or non_vc_example.'''
     )
     '''parser.add_argument(
         '-p', '--prefix',
@@ -40,14 +35,19 @@ def vc():
                                                                                                           args.prefix)
     else:
         work_dir = os.path.join(os.getcwd(), 'Vibc')'''
-
+    if args.query == 'vc_example':
+        query = os.path.join(example, '3.4.8.fna')
+    elif args.query == 'non_vc_example':
+        query = os.path.join(example, 'Not_Vc.fna')
+    else:
+        query = args.query
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '\t---Species Identification---')
-    species_judge = species(args.query)
+    species_judge = species(query)
     [sp, ani] = species_judge
     if sp:
         print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '\t Input genome is from species vibrio cholerae')
         print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '\t---SNP detection---')
-        phy = vc_snp(args.query)
+        phy = vc_snp(query)
         print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + '\tSNP lineage: ' + phy)
     else:
         print(datetime.datetime.now().strftime(
