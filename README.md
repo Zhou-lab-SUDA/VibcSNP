@@ -38,8 +38,14 @@ python  VibcSNP.py -q vc_example
 Command above will print such information:
 
 yyyy-mm-dd time     ---Species Identification---
+
 yyyy-mm-dd time      Input genome is from species vibrio cholerae
+
 yyyy-mm-dd time     Average Nucleotide Identity: 98.1241
+
 yyyy-mm-dd time     ---SNP detection---
+
 yyyy-mm-dd time     SNP lineage: 3.4.8
+
 yyyy-mm-dd time     ---Done---
+
